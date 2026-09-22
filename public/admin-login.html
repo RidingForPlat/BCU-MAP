@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin Login - BCU Map</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+<body>
+
+    <main class="page">
+
+        <h1>Admin Login</h1>
+
+        <section class="panel">
+
+            <form id="adminLoginForm">
+
+                <label for="adminPassword">
+                    Administrator Password
+                </label>
+
+                <input
+                    type="password"
+                    id="adminPassword"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button
+                    type="submit"
+                >
+                    Login
+                </button>
+
+                <p id="adminLoginMessage"></p>
+
+            </form>
+
+        </section>
+
+        <button
+            type="button"
+            onclick="location.href='index.html'"
+        >
+            Back
+        </button>
+
+    </main>
+
+    <script>
+
+        const form =
+            document.getElementById(
+                "adminLoginForm"
+            );
+
+        const password =
+            document.getElementById(
+                "adminPassword"
+            );
+
+        const message =
+            document.getElementById(
+                "adminLoginMessage"
+            );
+
+
+        form.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                message.textContent =
+                    "Logging in...";
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "/api/admin/login",
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body:
+                                    JSON.stringify({
+                                        password:
+                                            password.value
+                                    })
+                            }
+                        );
+
+
+                    const result =
+                        await response.json();
+
+
+                    if (!response.ok) {
+
+                        message.textContent =
+                            result.error ||
+                            "Login failed.";
+
+                        password.value = "";
+
+                        return;
+
+                    }
+
+
+                    location.href =
+                        "/admin.html";
+
+                }
+                catch (error) {
+
+                    console.error(
+                        error
+                    );
+
+                    message.textContent =
+                        "Failed to connect to the server.";
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

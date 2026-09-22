@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sign Up - BCU Map</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <main class="page">
+
+        <h1>Sign Up</h1>
+
+        <section class="panel">
+
+            <form id="signupForm">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    autocomplete="username"
+                    required
+                >
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    autocomplete="new-password"
+                    required
+                >
+
+                <label for="confirmPassword">
+                    Confirm Password
+                </label>
+
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    autocomplete="new-password"
+                    required
+                >
+
+                <button type="submit">
+                    Create Account
+                </button>
+
+            </form>
+
+            <p id="signupMessage"></p>
+
+        </section>
+
+        <button onclick="location.href='login.html'">
+            Back to Login
+        </button>
+
+    </main>
+
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+
+</body>
+
+</html>

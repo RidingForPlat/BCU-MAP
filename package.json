@@ -1,0 +1,13 @@
+{
+  "name": "bcu-map",
+  "version": "1.0.0",
+  "description": "BCU Map repository website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "multer": "^2.4.0"
+  }
+}

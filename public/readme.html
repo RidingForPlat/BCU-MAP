@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Guide - BCU Map</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <style>
+
+        /* ==========================================
+           LANGUAGE BUTTON
+        =========================================== */
+
+        .language-switch {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            z-index: 1000;
+        }
+
+        .language-switch button {
+            min-width: 48px;
+            height: 26px;
+
+            padding: 0 8px;
+
+            border: 2px solid #fff;
+            border-radius: 5px;
+
+            background: #333;
+            color: #fff;
+
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            box-sizing: border-box;
+        }
+
+        /* ==========================================
+           WHITE MODE
+        =========================================== */
+
+        body.white-mode .language-switch button {
+            background: #ddd;
+            color: #111;
+            border-color: #111;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <main class="page">
+
+        <!-- ==========================================
+             LANGUAGE
+        =========================================== -->
+
+<div class="language-switch">
+
+    <button
+        type="button"
+        id="languageToggle"
+    >
+
+        <span class="language-label">
+            Language
+        </span>
+
+        <img
+            id="languageFlag"
+            class="language-flag"
+            src="images/eng.png"
+            alt="English"
+        >
+
+        <span class="language-code">
+            (ENG)
+        </span>
+
+    </button>
+
+</div>
+
+        <!-- ==========================================
+             ENGLISH
+        =========================================== -->
+
+        <div id="englishGuide">
+
+            <h1>Guide</h1>
+
+
+            <section class="panel">
+
+                <h2>About BCU Map</h2>
+
+                <p>
+                    Welcome to the BCU Map repository.
+                </p>
+
+                <p>
+                    You can browse available maps and
+                    download their BCUZIP files.
+                </p>
+
+            </section>
+
+
+            <section class="panel">
+
+                <h2>How to Download</h2>
+
+                <p>
+                    1. Select Start.
+                </p>
+
+                <p>
+                    2. Select a map.
+                </p>
+
+                <p>
+                    3. Read the map information.
+                </p>
+
+                <p>
+                    4. Select Download.
+                </p>
+
+            <section class="panel">
+
+                <h3>Things You Should Not Forgot</h3>
+
+                <p>
+                    If the Maps Didnt load perfectly, Reset the Page. It's affectless to your settings.
+                </p>
+
+            </section>
+
+            </section>
+
+
+            <section class="panel">
+
+                <h2>Update &amp; Change</h2>
+
+                <p>
+                    Update means that a new version of the map
+                    has been uploaded.
+                </p>
+
+                <p>
+                    Change means that the map itself has been
+                    changed.
+                </p>
+
+            </section>
+
+        </div>
+
+
+        <!-- ==========================================
+             KOREAN
+        =========================================== -->
+
+        <div
+            id="koreanGuide"
+            style="display: none;"
+        >
+
+            <h1>가이드</h1>
+
+
+            <section class="panel">
+
+                <h2>BCU Map 소개</h2>
+
+                <p>
+                    BCU Map 저장소에 오신 것을 환영합니다.
+                </p>
+
+                <p>
+                    다양한 맵을 둘러보고
+                    해당 맵의 BCUZIP 파일을 다운로드할 수 있습니다.
+                </p>
+
+            </section>
+
+
+            <section class="panel">
+
+                <h2>다운로드 방법</h2>
+
+                <p>
+                    1. Maps를 선택합니다.
+                </p>
+
+                <p>
+                    2. 원하는 맵을 선택합니다.
+                </p>
+
+                <p>
+                    3. 맵 정보를 확인합니다.
+                </p>
+
+                <p>
+                    4. Download를 선택합니다.
+                </p>
+
+            <section class="panel">
+
+                <h3>참고</h3>
+
+                <p>
+                    맵이 제대로 안 불러와지는 경우엔 새로고침을 하십시오. 설정은 그대로 유지됩니다.
+                </p>
+
+            </section>
+
+            </section>
+
+
+            <section class="panel">
+
+                <h2>Update &amp; Change</h2>
+
+                <p>
+                    Update는 맵의 새로운 버전이 업로드되었음을 의미합니다.
+                </p>
+
+                <p>
+                    Change는 맵 자체가 변경되었음을 의미합니다.
+                </p>
+
+            </section>
+
+        </div>
+
+
+        <!-- ==========================================
+             BACK
+        =========================================== -->
+
+        <button
+            type="button"
+            onclick="location.href='index.html'"
+        >
+            Back
+        </button>
+
+    </main>
+
+
+    <script src="js/app.js"></script>
+
+
+<script>
+
+    const languageToggle =
+        document.getElementById("languageToggle");
+
+    const languageFlag =
+        document.getElementById("languageFlag");
+
+    const languageCode =
+        languageToggle.querySelector(".language-code");
+
+    const englishGuide =
+        document.getElementById("englishGuide");
+
+    const koreanGuide =
+        document.getElementById("koreanGuide");
+
+
+    languageToggle.addEventListener(
+        "click",
+        function() {
+
+            const isKorean =
+                languageToggle.dataset.language === "kor";
+
+
+            if (isKorean) {
+
+                // KOR → ENG
+
+                languageToggle.dataset.language = "eng";
+
+                languageFlag.src =
+                    "images/eng.png";
+
+                languageFlag.alt =
+                    "English";
+
+                languageCode.textContent =
+                    "(ENG)";
+
+                englishGuide.style.display =
+                    "block";
+
+                koreanGuide.style.display =
+                    "none";
+
+                document.documentElement.lang =
+                    "en";
+
+            } else {
+
+                // ENG → KOR
+
+                languageToggle.dataset.language = "kor";
+
+                languageFlag.src =
+                    "images/kor.png";
+
+                languageFlag.alt =
+                    "Korean";
+
+                languageCode.textContent =
+                    "(KOR)";
+
+                englishGuide.style.display =
+                    "none";
+
+                koreanGuide.style.display =
+                    "block";
+
+                document.documentElement.lang =
+                    "ko";
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>
