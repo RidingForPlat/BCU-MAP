@@ -937,75 +937,17 @@ async function renderMapDetailsPage() {
         // 무조건 생성
         // ------------------------------------------
 
-const descriptionHTML = document.createElement("p");
-
-descriptionHTML.className =
-    "description";
-
-descriptionHTML.textContent =
-    map.description || "";
-
-
-const downloadContainer =
-    document.createElement("p");
-
-
-const downloadLink =
-    document.createElement("a");
-
-downloadLink.className =
-    "download-map-link";
-
-downloadLink.href =
-    "/api/maps/" +
-    encodeURIComponent(id) +
-    "/download";
-
-downloadLink.textContent =
-    "Download Map";
-
-downloadContainer.appendChild(
-    downloadLink
-);
-
-
-details.innerHTML = "";
-
-details.insertAdjacentHTML(
-    "beforeend",
-    `
-        <h1>
-            ${escapeHTML(
-                map.name ||
-                "Unnamed Map"
-            )}
-            ${labels.join(" ")}
-        </h1>
-
-        <p>
-            Creator: ${escapeHTML(
-                map.creator ||
-                "Unknown"
-            )}
-        </p>
-
-        <p>
-            Version: ${escapeHTML(
-                map.version ||
-                "1.0"
-            )}
-        </p>
-    `
-);
-
-
-details.appendChild(
-    descriptionHTML
-);
-
-details.appendChild(
-    downloadContainer
-);
+        const downloadHTML = `
+            <p class="download-map-container">
+                <a
+                    class="download-map-link"
+                    href="/api/maps/${encodeURIComponent(id)}/download"
+                    download
+                >
+                    Download Map
+                </a>
+            </p>
+        `;
 
 
         // ------------------------------------------
@@ -1375,17 +1317,7 @@ document.addEventListener(
 
         loadAdminPage();
         renderMapsPage();
-
-        // Map 상세 페이지일 때만 실행
-        if (
-            document.getElementById(
-                "seasonDetails"
-            )
-        ) {
-
-            renderMapDetailsPage();
-
-        }
+        renderMapDetailsPage();
 
     }
 );
