@@ -900,13 +900,13 @@ async function renderMapDetailsPage() {
 const downloadHTML = `
     <p>
         <a
+            class="download-map-link"
             href="/api/maps/${encodeURIComponent(id)}/download"
         >
             Download Map
         </a>
     </p>
 `;
-
 
         details.innerHTML = `
             <h1>

@@ -2028,3 +2028,51 @@ body.white-mode .maps-opening.step-4 .maps-opening-frame {
     background: #fff !important;
 }
 
+/* ==================================================
+   DOWNLOAD MAP
+================================================== */
+
+.download-map-link {
+    display: inline-block;
+
+    padding: 10px 18px;
+
+    border: 2px solid currentColor;
+    border-radius: 10px;
+
+    color: #fff;
+
+    font-family:
+        "Pixelify Sans",
+        sans-serif;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        color 0.15s ease,
+        scale 0.15s ease;
+}
+
+
+.download-map-link:hover {
+    background: #fff;
+    color: #111;
+
+    scale: 1.08;
+
+    text-decoration: none;
+}
+
+
+body.white-mode .download-map-link {
+    color: #111;
+}
+
+
+body.white-mode .download-map-link:hover {
+    background: #111;
+    color: #fff;
+}
