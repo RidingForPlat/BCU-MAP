@@ -795,7 +795,6 @@ async function renderMapsPage() {
     );
 
 }
-
 // ==================================================
 // MAP DETAILS PAGE
 // ==================================================
@@ -806,6 +805,7 @@ async function renderMapDetailsPage() {
         document.getElementById(
             "seasonDetails"
         );
+
 
     if (!details) {
         return;
@@ -896,80 +896,122 @@ async function renderMapDetailsPage() {
         }
 
 
-        // ------------------------------------------
-        // 기본 정보
-        // ------------------------------------------
+        // ==========================================
+        // DESCRIPTION
+        // ==========================================
+
+        const description =
+            map.description &&
+            String(
+                map.description
+            ).trim()
+                ? map.description
+                : "No description.";
+
+
+        // ==========================================
+        // DOWNLOAD
+        // ==========================================
+
+        let downloadHTML = "";
+
+
+        if (map.file) {
+
+            downloadHTML = `
+                <p class="map-download">
+
+                    <a
+                        class="download-map-link"
+                        href="/api/maps/${encodeURIComponent(id)}/download"
+                        download
+                    >
+                        Download Map
+                    </a>
+
+                </p>
+            `;
+
+        }
+
+
+        // ==========================================
+        // FINAL MAP INFORMATION
+        // ==========================================
 
         details.innerHTML = `
-            <h1>
-                ${escapeHTML(
-                    map.name ||
-                    "Unnamed Map"
-                )}
-                ${labels.join(" ")}
-            </h1>
 
-            <p>
-                Creator: ${escapeHTML(
-                    map.creator ||
-                    "Unknown"
-                )}
-            </p>
+            <div class="panel map-information">
 
-            <p>
-                Version: ${escapeHTML(
-                    map.version ||
-                    "1.0"
-                )}
-            </p>
+                <h2>
+                    Map Information
+                </h2>
+
+
+                <p>
+                    Creator: ${escapeHTML(
+                        map.creator ||
+                        "Unknown"
+                    )}
+                </p>
+
+
+                <p>
+                    Version: ${escapeHTML(
+                        map.version ||
+                        "1.0"
+                    )}
+                </p>
+
+
+                <p class="description-title">
+                    Description:
+                </p>
+
+
+                <p class="description">
+                    ${escapeHTML(
+                        description
+                    )}
+                </p>
+
+
+                ${downloadHTML}
+
+            </div>
+
         `;
 
 
-        // ------------------------------------------
-        // DESCRIPTION
-        // ------------------------------------------
+        // ==========================================
+        // MAP TITLE
+        // ==========================================
 
-        const description =
-            document.createElement("p");
-
-        description.className =
-            "description";
-
-        description.textContent =
-            map.description || "";
-
-        details.appendChild(
-            description
-        );
+        const title =
+            document.createElement(
+                "h1"
+            );
 
 
-        // ------------------------------------------
-        // DOWNLOAD BUTTON
-        // ------------------------------------------
+        title.textContent =
+            map.name ||
+            "Unnamed Map";
 
-        const downloadContainer =
-            document.createElement("p");
 
-        const downloadLink =
-            document.createElement("a");
+        if (labels.length > 0) {
 
-        downloadLink.className =
-            "download-map-link";
+            title.insertAdjacentHTML(
+                "beforeend",
+                " " +
+                labels.join(" ")
+            );
 
-        downloadLink.href =
-            "/api/maps/" +
-            encodeURIComponent(id) +
-            "/download";
+        }
 
-        downloadLink.textContent =
-            "Download Map";
 
-        downloadContainer.appendChild(
-            downloadLink
-        );
-
-        details.appendChild(
-            downloadContainer
+        details.insertBefore(
+            title,
+            details.firstChild
         );
 
     }
@@ -990,7 +1032,6 @@ async function renderMapDetailsPage() {
     }
 
 }
-
 // ==================================================
 // MAPS OPENING
 // ==================================================
