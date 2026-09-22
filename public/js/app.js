@@ -1317,7 +1317,17 @@ document.addEventListener(
 
         loadAdminPage();
         renderMapsPage();
-        renderMapDetailsPage();
+
+        // Map 상세 페이지일 때만 실행
+        if (
+            document.getElementById(
+                "seasonDetails"
+            )
+        ) {
+
+            renderMapDetailsPage();
+
+        }
 
     }
 );
