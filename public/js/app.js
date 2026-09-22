@@ -897,30 +897,15 @@ async function renderMapDetailsPage() {
         }
 
 
-        let downloadHTML =
-            "";
-
-
-        if (map.file) {
-
-            downloadHTML = `
-                <p>
-                    <a
-                        href="${escapeHTML(
-                            map.file
-                        )}"
-                        download="${escapeHTML(
-                            map.originalFile ||
-                            map.name ||
-                            "map"
-                        )}"
-                    >
-                        Download Map
-                    </a>
-                </p>
-            `;
-
-        }
+const downloadHTML = `
+    <p>
+        <a
+            href="/api/maps/${encodeURIComponent(id)}/download"
+        >
+            Download Map
+        </a>
+    </p>
+`;
 
 
         details.innerHTML = `

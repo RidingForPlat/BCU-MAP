@@ -699,7 +699,75 @@ app.get(
 
     }
 );
+// ==================================================
+// DOWNLOAD MAP
+// ==================================================
 
+app.get(
+    "/api/maps/:id/download",
+    (req, res) => {
+
+        const maps =
+            readMaps();
+
+        const map =
+            maps.find(
+                item =>
+                    String(
+                        item.id
+                    ) ===
+                    String(
+                        req.params.id
+                    )
+            );
+
+        if (!map) {
+
+            return res
+                .status(404)
+                .send("Map not found");
+
+        }
+
+        if (!map.file) {
+
+            return res
+                .status(404)
+                .send("Map file not found");
+
+        }
+
+        const filename =
+            path.basename(
+                map.file
+            );
+
+        const filePath =
+            path.join(
+                UPLOAD_DIR,
+                filename
+            );
+
+        if (
+            !fs.existsSync(
+                filePath
+            )
+        ) {
+
+            return res
+                .status(404)
+                .send("Map file not found");
+
+        }
+
+        res.download(
+            filePath,
+            map.originalFile ||
+            "map"
+        );
+
+    }
+);
 
 // ==================================================
 // ADD MAP
