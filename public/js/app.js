@@ -801,6 +801,9 @@ async function renderMapsPage() {
 // MAP DETAILS PAGE
 // ==================================================
 
+let mapDetailsRenderToken = 0;
+
+
 async function renderMapDetailsPage() {
 
     const details =
@@ -837,11 +840,29 @@ async function renderMapDetailsPage() {
     }
 
 
-    details.innerHTML = `
-        <p>
-            Loading...
-        </p>
-    `;
+    // ------------------------------------------
+    // 이번 렌더링만 유효하도록 토큰 생성
+    // ------------------------------------------
+
+    const renderToken =
+        ++mapDetailsRenderToken;
+
+
+    // ------------------------------------------
+    // 처음 로딩할 때만 Loading 표시
+    // ------------------------------------------
+
+    if (
+        !details.dataset.mapLoaded
+    ) {
+
+        details.innerHTML = `
+            <p>
+                Loading...
+            </p>
+        `;
+
+    }
 
 
     try {
@@ -851,6 +872,7 @@ async function renderMapDetailsPage() {
                 "/api/maps/" +
                 encodeURIComponent(id),
                 {
+                    method: "GET",
                     cache: "no-store"
                 }
             );
@@ -858,6 +880,19 @@ async function renderMapDetailsPage() {
 
         const map =
             await response.json();
+
+
+        // ------------------------------------------
+        // 이미 더 새로운 렌더링이 시작됐다면
+        // 이 오래된 요청은 아무것도 건드리지 않음
+        // ------------------------------------------
+
+        if (
+            renderToken !==
+            mapDetailsRenderToken
+        ) {
+            return;
+        }
 
 
         if (!response.ok) {
@@ -897,16 +932,27 @@ async function renderMapDetailsPage() {
         }
 
 
-const downloadHTML = `
-    <p>
-        <a
-            class="download-map-link"
-            href="/api/maps/${encodeURIComponent(id)}/download"
-        >
-            Download Map
-        </a>
-    </p>
-`;
+        // ------------------------------------------
+        // Download 버튼
+        // 무조건 생성
+        // ------------------------------------------
+
+        const downloadHTML = `
+            <p class="download-map-container">
+                <a
+                    class="download-map-link"
+                    href="/api/maps/${encodeURIComponent(id)}/download"
+                    download
+                >
+                    Download Map
+                </a>
+            </p>
+        `;
+
+
+        // ------------------------------------------
+        // 최종 화면
+        // ------------------------------------------
 
         details.innerHTML = `
             <h1>
@@ -918,14 +964,16 @@ const downloadHTML = `
             </h1>
 
             <p>
-                Creator: ${escapeHTML(
+                Creator:
+                ${escapeHTML(
                     map.creator ||
                     "Unknown"
                 )}
             </p>
 
             <p>
-                Version: ${escapeHTML(
+                Version:
+                ${escapeHTML(
                     map.version ||
                     "1.0"
                 )}
@@ -941,8 +989,43 @@ const downloadHTML = `
             ${downloadHTML}
         `;
 
+
+        // ------------------------------------------
+        // 정상적으로 최종 렌더링됐음을 기록
+        // ------------------------------------------
+
+        details.dataset.mapLoaded = "true";
+
+
+        // ------------------------------------------
+        // Download 링크가 실제 DOM에 들어왔는지 확인
+        // ------------------------------------------
+
+        const downloadLink =
+            details.querySelector(
+                ".download-map-link"
+            );
+
+
+        if (!downloadLink) {
+
+            console.warn(
+                "[BCU MAP] Download Map link was not created."
+            );
+
+        }
+
     }
     catch (error) {
+
+        // 오래된 요청이면 무시
+        if (
+            renderToken !==
+            mapDetailsRenderToken
+        ) {
+            return;
+        }
+
 
         console.error(
             "[BCU MAP] Failed to load map details:",
@@ -959,7 +1042,6 @@ const downloadHTML = `
     }
 
 }
-
 
 // ==================================================
 // MAPS OPENING
