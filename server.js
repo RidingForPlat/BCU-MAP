@@ -20,7 +20,7 @@ const ADMIN_SESSION_SECRET =
     process.env.ADMIN_SESSION_SECRET;
 
 const ADMIN_SESSION_MAX_AGE =
-    12 * 60 * 60; // 12시간
+    1 * 30 * 60; // 12시간
 
 
 if (!ADMIN_PASSWORD) {
